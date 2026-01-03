@@ -1,42 +1,63 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
-	"strconv"
-	"strings"
 )
 
 func main() {
+	////INITIALIZE ARRAY WITHOUT VALUES
+	//var array1 [5]int
+	////INITIALIZE ARRAY WITH VALUES
+	//var array2 = [3]string{"Ayodeji", "Golang", "DSA"}
+	//
+	//fmt.Println(array1)
+	//fmt.Println(array2)
+	//
+	////MODIFY ARRAY
+	//array1[0] = 1
+	//array1[1] = 2
+	//
+	//array2[2] = "Golang is Great"
+	//
+	//fmt.Println(array1)
+	//fmt.Println(array2)
+	//fmt.Println(len(array2))
 
-	var reader = bufio.NewReader(os.Stdin)
+	/* SLICES */
 
-	fmt.Print("Enter your name: ")
-	var name, nameError = reader.ReadString('\n')
-	if nameError != nil {
-		fmt.Println("Error: ", nameError.Error())
-		return
-	}
-	if strings.TrimSpace(name) == "ayodeji" || strings.TrimSpace(name) == "Ayodeji" {
-		fmt.Println("Your name can't be Ayodeji because the owner of this app is Ayodeji")
-		return
-	}
+	//INITIALIZE SLICE WITH VALUES
+	var slice1 = []int{10, 20, 30, 40}
+	fmt.Println(len(slice1), cap(slice1), slice1)
 
-	fmt.Print("Enter your age: ")
+	//INITIALIZE SLICE WITH EMPTY VALUES
+	var slice2 = make([]string, 3)
+	fmt.Println(slice2)
 
-	var age, ageErr = reader.ReadString('\n')
-	if ageErr != nil {
-		fmt.Println("Error: ", ageErr.Error())
-	}
-	ageNum, ageNumErr := strconv.Atoi(strings.TrimSpace(age))
-	if ageNumErr != nil {
-		fmt.Println("Error: ", ageNumErr.Error())
-		return
-	}
-	if ageNum < 18 {
-		fmt.Println("Your age is too low")
-		return
-	}
-	fmt.Println("Welcome ", name, "you said you are", ageNum, "years old.")
+	//INITIALIZE SLICE WITH EMPTY VALUES AND A FIXED CAPACITY
+	var slice3 = make([]int, 3, 7)
+	fmt.Println(len(slice3), cap(slice3), slice3)
+
+	//ACCESS BY INDEX
+	fmt.Println(slice1[2])
+
+	//MODIFY VALUE
+	//slice2[1] = "Software"
+	fmt.Println(slice2)
+
+	//CREATING SUB SLICES
+	var sliceSplit = slice1[0:2]
+	fmt.Println(sliceSplit)
+
+	////APPEND SLICES
+	//slice1 = append(slice1, 1)
+	//slice1 = append(slice1, 23, 234, 2345, 23456, 234567)
+	//fmt.Printf("len=%d, cap=%d, %v\n", len(slice1), cap(slice1), slice1)
+
+	rotateArray(slice1, 2)
+	fmt.Println(slice1)
+}
+
+func rotateArray(slice []int, k int) {
+	n := len(slice)
+	k = k % n
 }
