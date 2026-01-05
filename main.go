@@ -2,62 +2,95 @@ package main
 
 import (
 	"fmt"
+	"strings"
+	"unicode"
 )
 
 func main() {
-	////INITIALIZE ARRAY WITHOUT VALUES
-	//var array1 [5]int
-	////INITIALIZE ARRAY WITH VALUES
-	//var array2 = [3]string{"Ayodeji", "Golang", "DSA"}
-	//
-	//fmt.Println(array1)
-	//fmt.Println(array2)
-	//
-	////MODIFY ARRAY
-	//array1[0] = 1
-	//array1[1] = 2
-	//
-	//array2[2] = "Golang is Great"
-	//
-	//fmt.Println(array1)
-	//fmt.Println(array2)
-	//fmt.Println(len(array2))
 
-	/* SLICES */
+	//DECLARE STRING
+	var name string = "Ayodeji Shoga"
+	topic := "DSA"
 
-	//INITIALIZE SLICE WITH VALUES
-	var slice1 = []int{10, 20, 30, 40}
-	fmt.Println(len(slice1), cap(slice1), slice1)
+	//CREATES NEW STRING AND REASSIGN
+	name = "Shoga Ayodeji"
+	fmt.Println(name)
 
-	//INITIALIZE SLICE WITH EMPTY VALUES
-	var slice2 = make([]string, 3)
-	fmt.Println(slice2)
+	//CONCATENATION
+	message := name + " is learning " + topic + " in golang"
+	fmt.Println(message)
 
-	//INITIALIZE SLICE WITH EMPTY VALUES AND A FIXED CAPACITY
-	var slice3 = make([]int, 3, 7)
-	fmt.Println(len(slice3), cap(slice3), slice3)
+	//SUBSTRINGS
+	firstName := name[:6]
+	lastName := name[7:]
+	fmt.Println("First Name: ", firstName)
+	fmt.Println("Last Name: ", lastName)
 
-	//ACCESS BY INDEX
-	fmt.Println(slice1[2])
+	//REPLACE STRING
+	fullMeaning := strings.Replace(topic, "DSA", "Data Structure and Algorithm", 1)
+	fmt.Println(fullMeaning)
 
-	//MODIFY VALUE
-	//slice2[1] = "Software"
-	fmt.Println(slice2)
+	//JOIN STRINGS
+	fullName := strings.Join([]string{firstName, lastName}, " ")
+	fmt.Println(fullName)
 
-	//CREATING SUB SLICES
-	var sliceSplit = slice1[0:2]
-	fmt.Println(sliceSplit)
-
-	////APPEND SLICES
-	//slice1 = append(slice1, 1)
-	//slice1 = append(slice1, 23, 234, 2345, 23456, 234567)
-	//fmt.Printf("len=%d, cap=%d, %v\n", len(slice1), cap(slice1), slice1)
-
-	rotateArray(slice1, 2)
-	fmt.Println(slice1)
 }
 
-func rotateArray(slice []int, k int) {
-	n := len(slice)
-	k = k % n
+// CHECK IF STRING READS THE SAME BACKWARDS AS FORWARDS
+func checkPalindrome(s string) bool {
+	var filtered []rune
+
+	//REMOVE SPECIAL CHARACTERS AND CONVERT CHARACTERS TO LOWERCASE
+	for _, value := range s {
+		if unicode.IsLetter(value) || unicode.IsDigit(value) {
+
+			filtered = append(filtered, unicode.ToLower(value))
+		}
+	}
+
+	//TWO POINTER TO CHECK IF PALINDROME
+	left, right := 0, len(filtered)-1
+	for left < right {
+		if filtered[left] != filtered[right] {
+			return false
+		}
+		left++
+		right--
+
+	}
+	return true
+}
+
+func findUniqueCharacter(s string) int {
+	var filtered []rune
+	for _, r := range s {
+		if unicode.IsLetter(r) || unicode.IsDigit(r) {
+		}
+		filtered = append(filtered, unicode.ToLower(r))
+	}
+
+	index := 0
+	for i := 0; i < len(filtered); i++ {
+		if filtered[i] == filtered[index] {
+			index++
+		} else {
+			return index
+		}
+	}
+	return 0
+}
+
+func reverseWords(s string) string {
+
+	substrings := strings.Fields(s)
+	left, right := 0, len(substrings)-1
+
+	for left < right {
+		substrings[left], substrings[right] = substrings[right], substrings[left]
+		left++
+		right--
+	}
+	result := strings.Join(substrings, " ")
+
+	return result
 }
