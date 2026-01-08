@@ -5,23 +5,23 @@ import (
 )
 
 func main() {
-	////INITIALIZE ARRAY WITHOUT VALUES
-	//var array1 [5]int
-	////INITIALIZE ARRAY WITH VALUES
-	//var array2 = [3]string{"Ayodeji", "Golang", "DSA"}
-	//
-	//fmt.Println(array1)
-	//fmt.Println(array2)
-	//
-	////MODIFY ARRAY
-	//array1[0] = 1
-	//array1[1] = 2
-	//
-	//array2[2] = "Golang is Great"
-	//
-	//fmt.Println(array1)
-	//fmt.Println(array2)
-	//fmt.Println(len(array2))
+	//INITIALIZE ARRAY WITHOUT VALUES
+	var array1 [5]int
+	//INITIALIZE ARRAY WITH VALUES
+	var array2 = [3]string{"Ayodeji", "Golang", "DSA"}
+
+	fmt.Println(array1)
+	fmt.Println(array2)
+
+	//MODIFY ARRAY
+	array1[0] = 1
+	array1[1] = 2
+
+	array2[2] = "Golang is Great"
+
+	fmt.Println(array1)
+	fmt.Println(array2)
+	fmt.Println(len(array2))
 
 	/* SLICES */
 
@@ -48,16 +48,9 @@ func main() {
 	var sliceSplit = slice1[0:2]
 	fmt.Println(sliceSplit)
 
-	////APPEND SLICES
-	//slice1 = append(slice1, 1)
-	//slice1 = append(slice1, 23, 234, 2345, 23456, 234567)
-	//fmt.Printf("len=%d, cap=%d, %v\n", len(slice1), cap(slice1), slice1)
+	//APPEND SLICES
+	slice1 = append(slice1, 1)
+	slice1 = append(slice1, 23, 234, 2345, 23456, 234567)
+	fmt.Printf("len=%d, cap=%d, %v\n", len(slice1), cap(slice1), slice1)
 
-	rotateArray(slice1, 2)
-	fmt.Println(slice1)
-}
-
-func rotateArray(slice []int, k int) {
-	n := len(slice)
-	k = k % n
 }
