@@ -1,42 +1,96 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
-	"strconv"
 	"strings"
+	"unicode"
 )
 
 func main() {
 
-	var reader = bufio.NewReader(os.Stdin)
+	//DECLARE STRING
+	var name string = "Ayodeji Shoga"
+	topic := "DSA"
 
-	fmt.Print("Enter your name: ")
-	var name, nameError = reader.ReadString('\n')
-	if nameError != nil {
-		fmt.Println("Error: ", nameError.Error())
-		return
-	}
-	if strings.TrimSpace(name) == "ayodeji" || strings.TrimSpace(name) == "Ayodeji" {
-		fmt.Println("Your name can't be Ayodeji because the owner of this app is Ayodeji")
-		return
+	//CREATES NEW STRING AND REASSIGN
+	name = "Shoga Ayodeji"
+	fmt.Println(name)
+
+	//CONCATENATION
+	message := name + " is learning " + topic + " in golang"
+	fmt.Println(message)
+
+	//SUBSTRINGS
+	firstName := name[:6]
+	lastName := name[7:]
+	fmt.Println("First Name: ", firstName)
+	fmt.Println("Last Name: ", lastName)
+
+	//REPLACE STRING
+	fullMeaning := strings.Replace(topic, "DSA", "Data Structure and Algorithm", 1)
+	fmt.Println(fullMeaning)
+
+	//JOIN STRINGS
+	fullName := strings.Join([]string{firstName, lastName}, " ")
+	fmt.Println(fullName)
+
+}
+
+// CHECK IF STRING READS THE SAME BACKWARDS AS FORWARDS
+func checkPalindrome(s string) bool {
+	var filtered []rune
+
+	//REMOVE SPECIAL CHARACTERS AND CONVERT CHARACTERS TO LOWERCASE
+	for _, value := range s {
+		if unicode.IsLetter(value) || unicode.IsDigit(value) {
+
+			filtered = append(filtered, unicode.ToLower(value))
+		}
 	}
 
-	fmt.Print("Enter your age: ")
+	//TWO POINTER TO CHECK IF PALINDROME
+	left, right := 0, len(filtered)-1
+	for left < right {
+		if filtered[left] != filtered[right] {
+			return false
+		}
+		left++
+		right--
 
-	var age, ageErr = reader.ReadString('\n')
-	if ageErr != nil {
-		fmt.Println("Error: ", ageErr.Error())
 	}
-	ageNum, ageNumErr := strconv.Atoi(strings.TrimSpace(age))
-	if ageNumErr != nil {
-		fmt.Println("Error: ", ageNumErr.Error())
-		return
+	return true
+}
+
+func findUniqueCharacter(s string) int {
+	var filtered []rune
+	for _, r := range s {
+		if unicode.IsLetter(r) || unicode.IsDigit(r) {
+		}
+		filtered = append(filtered, unicode.ToLower(r))
 	}
-	if ageNum < 18 {
-		fmt.Println("Your age is too low")
-		return
+
+	index := 0
+	for i := 0; i < len(filtered); i++ {
+		if filtered[i] == filtered[index] {
+			index++
+		} else {
+			return index
+		}
 	}
-	fmt.Println("Welcome ", name, "you said you are", ageNum, "years old.")
+	return 0
+}
+
+func reverseWords(s string) string {
+
+	substrings := strings.Fields(s)
+	left, right := 0, len(substrings)-1
+
+	for left < right {
+		substrings[left], substrings[right] = substrings[right], substrings[left]
+		left++
+		right--
+	}
+	result := strings.Join(substrings, " ")
+
+	return result
 }
