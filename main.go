@@ -22,7 +22,7 @@ func main() {
 
 	//SUBSTRINGS
 	firstName := name[:6]
-	lastName := name[7:]
+	lastName := name[6:]
 	fmt.Println("First Name: ", firstName)
 	fmt.Println("Last Name: ", lastName)
 
@@ -43,7 +43,6 @@ func checkPalindrome(s string) bool {
 	//REMOVE SPECIAL CHARACTERS AND CONVERT CHARACTERS TO LOWERCASE
 	for _, value := range s {
 		if unicode.IsLetter(value) || unicode.IsDigit(value) {
-
 			filtered = append(filtered, unicode.ToLower(value))
 		}
 	}
