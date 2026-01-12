@@ -1,96 +1,126 @@
 package main
 
-import (
-	"fmt"
-	"strings"
-	"unicode"
-)
+import "fmt"
 
 func main() {
 
-	//DECLARE STRING
-	var name string = "Ayodeji Shoga"
-	topic := "DSA"
-
-	//CREATES NEW STRING AND REASSIGN
-	name = "Shoga Ayodeji"
-	fmt.Println(name)
-
-	//CONCATENATION
-	message := name + " is learning " + topic + " in golang"
-	fmt.Println(message)
-
-	//SUBSTRINGS
-	firstName := name[:6]
-	lastName := name[7:]
-	fmt.Println("First Name: ", firstName)
-	fmt.Println("Last Name: ", lastName)
-
-	//REPLACE STRING
-	fullMeaning := strings.Replace(topic, "DSA", "Data Structure and Algorithm", 1)
-	fmt.Println(fullMeaning)
-
-	//JOIN STRINGS
-	fullName := strings.Join([]string{firstName, lastName}, " ")
-	fmt.Println(fullName)
-
 }
 
-// CHECK IF STRING READS THE SAME BACKWARDS AS FORWARDS
-func checkPalindrome(s string) bool {
-	var filtered []rune
-
-	//REMOVE SPECIAL CHARACTERS AND CONVERT CHARACTERS TO LOWERCASE
-	for _, value := range s {
-		if unicode.IsLetter(value) || unicode.IsDigit(value) {
-
-			filtered = append(filtered, unicode.ToLower(value))
-		}
-	}
-
-	//TWO POINTER TO CHECK IF PALINDROME
-	left, right := 0, len(filtered)-1
-	for left < right {
-		if filtered[left] != filtered[right] {
-			return false
-		}
-		left++
-		right--
-
-	}
-	return true
+type ListNode struct {
+	Val  int       // Data
+	Next *ListNode // Pointer to next node
 }
 
-func findUniqueCharacter(s string) int {
-	var filtered []rune
-	for _, r := range s {
-		if unicode.IsLetter(r) || unicode.IsDigit(r) {
-		}
-		filtered = append(filtered, unicode.ToLower(r))
-	}
+func printList(head *ListNode) {
+	current := head
 
-	index := 0
-	for i := 0; i < len(filtered); i++ {
-		if filtered[i] == filtered[index] {
-			index++
-		} else {
-			return index
-		}
+	for current != nil {
+		fmt.Printf("%d → ", current.Val)
+		current = current.Next
 	}
-	return 0
+	fmt.Println("nil")
 }
 
-func reverseWords(s string) string {
+func insertAtBeginning(head *ListNode, val int) *ListNode {
+	newNode := &ListNode{Val: val}
+	newNode.Next = head
+	return newNode // New head
+}
 
-	substrings := strings.Fields(s)
-	left, right := 0, len(substrings)-1
+func insertAtEnd(head *ListNode, val int) *ListNode {
+	newNode := &ListNode{Val: val}
 
-	for left < right {
-		substrings[left], substrings[right] = substrings[right], substrings[left]
-		left++
-		right--
+	// Edge case: empty list
+	if head == nil {
+		return newNode
 	}
-	result := strings.Join(substrings, " ")
 
-	return result
+	// Traverse to last node
+	current := head
+	for current.Next != nil {
+		current = current.Next
+	}
+
+	// Attach new node
+	current.Next = newNode
+	return head
+}
+
+func insertAtPosition(head *ListNode, val int, pos int) *ListNode {
+	newNode := &ListNode{Val: val}
+
+	// Insert at beginning
+	if pos == 0 {
+		newNode.Next = head
+		return newNode
+	}
+
+	// Traverse to position-1
+	current := head
+	for i := 0; i < pos-1 && current != nil; i++ {
+		current = current.Next
+	}
+
+	// If position is valid
+	if current != nil {
+		newNode.Next = current.Next
+		current.Next = newNode
+	}
+
+	return head
+}
+
+func deleteAtBeginning(head *ListNode) *ListNode {
+	if head == nil {
+		return nil
+	}
+
+	return head.Next // New head
+}
+
+func deleteAtEnd(head *ListNode) *ListNode {
+	// Empty list
+	if head == nil {
+		return nil
+	}
+
+	// Single node
+	if head.Next == nil {
+		return nil
+	}
+
+	// Traverse to second-to-last node
+	current := head
+	for current.Next.Next != nil {
+		current = current.Next
+	}
+
+	// Remove last node
+	current.Next = nil
+	return head
+}
+
+func deleteByValue(head *ListNode, val int) *ListNode {
+	// Empty list
+	if head == nil {
+		return nil
+	}
+
+	// Delete head if it matches
+	if head.Val == val {
+		return head.Next
+	}
+
+	// Find node before the one to delete
+	current := head
+	for current.Next != nil && current.Next.Val != val {
+		current = current.Next
+	}
+
+	// If found, skip the node
+	if current.Next != nil {
+		current.Next = current.Next.Next
+	}
+
+	return head
 }
