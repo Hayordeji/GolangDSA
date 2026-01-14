@@ -1,96 +1,54 @@
 package main
 
-import (
-	"fmt"
-	"strings"
-	"unicode"
-)
-
 func main() {
-
-	//DECLARE STRING
-	var name string = "Ayodeji Shoga"
-	topic := "DSA"
-
-	//CREATES NEW STRING AND REASSIGN
-	name = "Shoga Ayodeji"
-	fmt.Println(name)
-
-	//CONCATENATION
-	message := name + " is learning " + topic + " in golang"
-	fmt.Println(message)
-
-	//SUBSTRINGS
-	firstName := name[:6]
-	lastName := name[7:]
-	fmt.Println("First Name: ", firstName)
-	fmt.Println("Last Name: ", lastName)
-
-	//REPLACE STRING
-	fullMeaning := strings.Replace(topic, "DSA", "Data Structure and Algorithm", 1)
-	fmt.Println(fullMeaning)
-
-	//JOIN STRINGS
-	fullName := strings.Join([]string{firstName, lastName}, " ")
-	fmt.Println(fullName)
 
 }
 
-// CHECK IF STRING READS THE SAME BACKWARDS AS FORWARDS
-func checkPalindrome(s string) bool {
-	var filtered []rune
+type CircularQueue struct {
+	items    []int
+	front    int
+	rear     int
+	size     int
+	capacity int
+}
 
-	//REMOVE SPECIAL CHARACTERS AND CONVERT CHARACTERS TO LOWERCASE
-	for _, value := range s {
-		if unicode.IsLetter(value) || unicode.IsDigit(value) {
-
-			filtered = append(filtered, unicode.ToLower(value))
-		}
+func (q *CircularQueue) Enqueue(val int) bool {
+	if q.IsFull() {
+		return false
 	}
 
-	//TWO POINTER TO CHECK IF PALINDROME
-	left, right := 0, len(filtered)-1
-	for left < right {
-		if filtered[left] != filtered[right] {
-			return false
-		}
-		left++
-		right--
-
-	}
+	q.rear = (q.rear + 1) % q.capacity
+	q.items[q.rear] = val
+	q.size++
 	return true
 }
 
-func findUniqueCharacter(s string) int {
-	var filtered []rune
-	for _, r := range s {
-		if unicode.IsLetter(r) || unicode.IsDigit(r) {
-		}
-		filtered = append(filtered, unicode.ToLower(r))
+func (q *CircularQueue) Dequeue() (int, bool) {
+	if q.IsEmpty() {
+		return 0, false
 	}
 
-	index := 0
-	for i := 0; i < len(filtered); i++ {
-		if filtered[i] == filtered[index] {
-			index++
-		} else {
-			return index
-		}
-	}
-	return 0
+	element := q.items[q.front]
+	q.front = (q.front + 1) % q.capacity
+	q.size--
+	return element, true
 }
 
-func reverseWords(s string) string {
-
-	substrings := strings.Fields(s)
-	left, right := 0, len(substrings)-1
-
-	for left < right {
-		substrings[left], substrings[right] = substrings[right], substrings[left]
-		left++
-		right--
+func (q *CircularQueue) Front() (int, bool) {
+	if q.IsEmpty() {
+		return 0, false
 	}
-	result := strings.Join(substrings, " ")
+	return q.items[q.front], true
+}
 
-	return result
+func (q *CircularQueue) IsEmpty() bool {
+	return q.size == 0
+}
+
+func (q *CircularQueue) IsFull() bool {
+	return q.size == q.capacity
+}
+
+func (q *CircularQueue) Size() int {
+	return q.size
 }
