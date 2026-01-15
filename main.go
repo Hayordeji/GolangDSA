@@ -19,13 +19,13 @@ func main() {
 	fmt.Println(scores) // map[Ayodeji:95 Peter:87]
 
 	// Insert/Update - O(1)
-	scores["John"] = 5
-	scores["Esther"] = 3
-	scores["Clement"] = 7 // Updates existing key
+	scores["John"] = 23
+	scores["Esther"] = 47
+	scores["Clement"] = 70 // Updates existing key
 
 	// Lookup - O(1)
 	value := scores["Matthew"]
-	fmt.Println(value) // 7
+	fmt.Println(value) // 70
 
 	// Check if key exists - IMPORTANT PATTERN
 	value, exists := scores["John"]
