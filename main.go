@@ -1,96 +1,48 @@
 package main
 
-import (
-	"fmt"
-	"strings"
-	"unicode"
-)
+import "fmt"
 
 func main() {
 
-	//DECLARE STRING
-	var name string = "Ayodeji Shoga"
-	topic := "DSA"
-
-	//CREATES NEW STRING AND REASSIGN
-	name = "Shoga Ayodeji"
-	fmt.Println(name)
-
-	//CONCATENATION
-	message := name + " is learning " + topic + " in golang"
-	fmt.Println(message)
-
-	//SUBSTRINGS
-	firstName := name[:6]
-	lastName := name[7:]
-	fmt.Println("First Name: ", firstName)
-	fmt.Println("Last Name: ", lastName)
-
-	//REPLACE STRING
-	fullMeaning := strings.Replace(topic, "DSA", "Data Structure and Algorithm", 1)
-	fmt.Println(fullMeaning)
-
-	//JOIN STRINGS
-	fullName := strings.Join([]string{firstName, lastName}, " ")
-	fmt.Println(fullName)
-
-}
-
-// CHECK IF STRING READS THE SAME BACKWARDS AS FORWARDS
-func checkPalindrome(s string) bool {
-	var filtered []rune
-
-	//REMOVE SPECIAL CHARACTERS AND CONVERT CHARACTERS TO LOWERCASE
-	for _, value := range s {
-		if unicode.IsLetter(value) || unicode.IsDigit(value) {
-
-			filtered = append(filtered, unicode.ToLower(value))
-		}
+	// Method 1: Declare and initialize
+	ages := map[string]int{
+		"Ayodeji": 25,
+		"Peter":   30,
 	}
 
-	//TWO POINTER TO CHECK IF PALINDROME
-	left, right := 0, len(filtered)-1
-	for left < right {
-		if filtered[left] != filtered[right] {
-			return false
-		}
-		left++
-		right--
+	// Method 2: Using make
+	scores := make(map[string]int)
+	scores["Ayodeji"] = 95
+	scores["Peter"] = 87
 
+	fmt.Println(ages)   // map[Ayodeji:25 Peter:30]
+	fmt.Println(scores) // map[Ayodeji:95 Peter:87]
+
+	// Insert/Update - O(1)
+	scores["John"] = 5
+	scores["Esther"] = 3
+	scores["Clement"] = 7 // Updates existing key
+
+	// Lookup - O(1)
+	value := scores["Matthew"]
+	fmt.Println(value) // 7
+
+	// Check if key exists - IMPORTANT PATTERN
+	value, exists := scores["John"]
+	if exists {
+		fmt.Println("Found:", value)
+	} else {
+		fmt.Println("Not found")
 	}
-	return true
-}
 
-func findUniqueCharacter(s string) int {
-	var filtered []rune
-	for _, r := range s {
-		if unicode.IsLetter(r) || unicode.IsDigit(r) {
-		}
-		filtered = append(filtered, unicode.ToLower(r))
+	// Delete - O(1)
+	delete(scores, "John")
+
+	// Length
+	fmt.Println(len(scores)) // 1
+
+	// Iterate
+	for key, value := range scores {
+		fmt.Printf("%s: %d\n", key, value)
 	}
-
-	index := 0
-	for i := 0; i < len(filtered); i++ {
-		if filtered[i] == filtered[index] {
-			index++
-		} else {
-			return index
-		}
-	}
-	return 0
-}
-
-func reverseWords(s string) string {
-
-	substrings := strings.Fields(s)
-	left, right := 0, len(substrings)-1
-
-	for left < right {
-		substrings[left], substrings[right] = substrings[right], substrings[left]
-		left++
-		right--
-	}
-	result := strings.Join(substrings, " ")
-
-	return result
 }
