@@ -26,7 +26,10 @@ func main() {
 	/* SLICES */
 
 	//INITIALIZE SLICE WITH VALUES
-	var slice1 = []int{10, 20, 30, 40}
+	var slice1 = []int{10, 15, 567, 42, 42, 345, 543, 23, 111, 20, 30, 40}
+	result := containsDuplicate(slice1)
+	fmt.Println("The result for finding duplicates is", result)
+
 	fmt.Println(len(slice1), cap(slice1), slice1)
 
 	//INITIALIZE SLICE WITH EMPTY VALUES
@@ -53,4 +56,17 @@ func main() {
 	slice1 = append(slice1, 23, 234, 2345, 23456, 234567)
 	fmt.Printf("len=%d, cap=%d, %v\n", len(slice1), cap(slice1), slice1)
 
+}
+
+func containsDuplicate(nums []int) bool {
+	set := make(map[int]int)
+
+	for _, number := range nums {
+		set[number]++
+
+		if set[number] > 1 {
+			return true
+		}
+	}
+	return false
 }
