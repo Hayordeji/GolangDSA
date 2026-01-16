@@ -24,7 +24,7 @@ func main() {
 	scores["Clement"] = 70 // Updates existing key
 
 	// Lookup - O(1)
-	value := scores["Matthew"]
+	value := scores["Clement"]
 	fmt.Println(value) // 70
 
 	// Check if key exists - IMPORTANT PATTERN
