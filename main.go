@@ -1,96 +1,41 @@
 package main
 
-import (
-	"fmt"
-	"strings"
-	"unicode"
-)
+import "fmt"
 
 func main() {
+	fmt.Println(factorial(5)) // 120
+	fmt.Println(factorial(0)) // 1
+}
+func factorial(n int) int {
+	// Base case
+	if n <= 1 {
+		return 1
+	}
 
-	//DECLARE STRING
-	var name string = "Ayodeji Shoga"
-	topic := "DSA"
-
-	//CREATES NEW STRING AND REASSIGN
-	name = "Shoga Ayodeji"
-	fmt.Println(name)
-
-	//CONCATENATION
-	message := name + " is learning " + topic + " in golang"
-	fmt.Println(message)
-
-	//SUBSTRINGS
-	firstName := name[:6]
-	lastName := name[7:]
-	fmt.Println("First Name: ", firstName)
-	fmt.Println("Last Name: ", lastName)
-
-	//REPLACE STRING
-	fullMeaning := strings.Replace(topic, "DSA", "Data Structure and Algorithm", 1)
-	fmt.Println(fullMeaning)
-
-	//JOIN STRINGS
-	fullName := strings.Join([]string{firstName, lastName}, " ")
-	fmt.Println(fullName)
-
+	// Recursive case
+	return n * factorial(n-1)
 }
 
-// CHECK IF STRING READS THE SAME BACKWARDS AS FORWARDS
-func checkPalindrome(s string) bool {
-	var filtered []rune
-
-	//REMOVE SPECIAL CHARACTERS AND CONVERT CHARACTERS TO LOWERCASE
-	for _, value := range s {
-		if unicode.IsLetter(value) || unicode.IsDigit(value) {
-
-			filtered = append(filtered, unicode.ToLower(value))
-		}
+func fibonacci(n int) int {
+	// Base cases
+	if n <= 1 {
+		return n
 	}
 
-	//TWO POINTER TO CHECK IF PALINDROME
-	left, right := 0, len(filtered)-1
-	for left < right {
-		if filtered[left] != filtered[right] {
-			return false
-		}
-		left++
-		right--
-
-	}
-	return true
+	// Recursive case
+	return fibonacci(n-1) + fibonacci(n-2)
 }
 
-func findUniqueCharacter(s string) int {
-	var filtered []rune
-	for _, r := range s {
-		if unicode.IsLetter(r) || unicode.IsDigit(r) {
-		}
-		filtered = append(filtered, unicode.ToLower(r))
-	}
-
-	index := 0
-	for i := 0; i < len(filtered); i++ {
-		if filtered[i] == filtered[index] {
-			index++
-		} else {
-			return index
-		}
-	}
-	return 0
+// WRONG IMPLEMENTATION
+func countdown(n int) {
+	fmt.Println(n)
+	countdown(n - 1) //It never stops because of no present base case
 }
 
-func reverseWords(s string) string {
-
-	substrings := strings.Fields(s)
-	left, right := 0, len(substrings)-1
-
-	for left < right {
-		substrings[left], substrings[right] = substrings[right], substrings[left]
-		left++
-		right--
+// Infinite recursion - n never changes
+func bad(n int) int {
+	if n == 0 {
+		return 0
 	}
-	result := strings.Join(substrings, " ")
-
-	return result
+	return bad(n) // Problem doesn't get smaller
 }
