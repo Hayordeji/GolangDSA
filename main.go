@@ -1,96 +1,66 @@
 package main
 
-import (
-	"fmt"
-	"strings"
-	"unicode"
-)
-
 func main() {
 
-	//DECLARE STRING
-	var name string = "Ayodeji Shoga"
-	topic := "DSA"
-
-	//CREATES NEW STRING AND REASSIGN
-	name = "Shoga Ayodeji"
-	fmt.Println(name)
-
-	//CONCATENATION
-	message := name + " is learning " + topic + " in golang"
-	fmt.Println(message)
-
-	//SUBSTRINGS
-	firstName := name[:6]
-	lastName := name[7:]
-	fmt.Println("First Name: ", firstName)
-	fmt.Println("Last Name: ", lastName)
-
-	//REPLACE STRING
-	fullMeaning := strings.Replace(topic, "DSA", "Data Structure and Algorithm", 1)
-	fmt.Println(fullMeaning)
-
-	//JOIN STRINGS
-	fullName := strings.Join([]string{firstName, lastName}, " ")
-	fmt.Println(fullName)
-
 }
 
-// CHECK IF STRING READS THE SAME BACKWARDS AS FORWARDS
-func checkPalindrome(s string) bool {
-	var filtered []rune
+func bubbleSort(arr []int) {
+	n := len(arr)
 
-	//REMOVE SPECIAL CHARACTERS AND CONVERT CHARACTERS TO LOWERCASE
-	for _, value := range s {
-		if unicode.IsLetter(value) || unicode.IsDigit(value) {
+	// Outer loop: n-1 passes
+	for i := 0; i < n-1; i++ {
+		swapped := false
 
-			filtered = append(filtered, unicode.ToLower(value))
+		// Inner loop: compare adjacent elements
+		for j := 0; j < n-i-1; j++ {
+			if arr[j] > arr[j+1] {
+				// Swap
+				arr[j], arr[j+1] = arr[j+1], arr[j]
+				swapped = true
+			}
+		}
+
+		// Optimization: if no swaps, array is sorted
+		if !swapped {
+			break
 		}
 	}
-
-	//TWO POINTER TO CHECK IF PALINDROME
-	left, right := 0, len(filtered)-1
-	for left < right {
-		if filtered[left] != filtered[right] {
-			return false
-		}
-		left++
-		right--
-
-	}
-	return true
 }
 
-func findUniqueCharacter(s string) int {
-	var filtered []rune
-	for _, r := range s {
-		if unicode.IsLetter(r) || unicode.IsDigit(r) {
-		}
-		filtered = append(filtered, unicode.ToLower(r))
-	}
+func selectionSort(arr []int) {
+	n := len(arr)
 
-	index := 0
-	for i := 0; i < len(filtered); i++ {
-		if filtered[i] == filtered[index] {
-			index++
-		} else {
-			return index
+	// Move boundary of unsorted subarray
+	for i := 0; i < n-1; i++ {
+		// Find minimum in unsorted portion
+		minIndex := i
+
+		for j := i + 1; j < n; j++ {
+			if arr[j] < arr[minIndex] {
+				minIndex = j
+			}
 		}
+
+		// Swap minimum with first unsorted element
+		arr[i], arr[minIndex] = arr[minIndex], arr[i]
 	}
-	return 0
 }
 
-func reverseWords(s string) string {
+func insertionSort(arr []int) {
+	n := len(arr)
 
-	substrings := strings.Fields(s)
-	left, right := 0, len(substrings)-1
+	// Start from second element
+	for i := 1; i < n; i++ {
+		key := arr[i] // Element to insert
+		j := i - 1
 
-	for left < right {
-		substrings[left], substrings[right] = substrings[right], substrings[left]
-		left++
-		right--
+		// Shift elements greater than key to the right
+		for j >= 0 && arr[j] > key {
+			arr[j+1] = arr[j]
+			j--
+		}
+
+		// Insert key at correct position
+		arr[j+1] = key
 	}
-	result := strings.Join(substrings, " ")
-
-	return result
 }
