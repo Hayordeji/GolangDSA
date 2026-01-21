@@ -21,8 +21,6 @@ func BinarySearch(nums []int, target int) int {
 
 	for low <= high {
 		// Calculate the middle index.
-		// Using low + (high-low)/2 prevents potential overflow in other languages,
-		// though Go's int type is usually 64-bit.
 		mid := low + (high-low)/2
 
 		if nums[mid] == target {
