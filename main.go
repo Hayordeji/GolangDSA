@@ -19,10 +19,6 @@ func main() {
 	g.DFS(0)
 }
 
-type Graph struct {
-	adj map[int][]int
-}
-
 func NewGraph() *Graph {
 	return &Graph{
 		adj: make(map[int][]int),
@@ -31,6 +27,10 @@ func NewGraph() *Graph {
 
 func (g *Graph) AddEdge(u, v int) {
 	g.adj[u] = append(g.adj[u], v)
+}
+
+type Graph struct {
+	adj map[int][]int
 }
 
 func (g *Graph) BFS(start int) {
@@ -55,11 +55,6 @@ func (g *Graph) BFS(start int) {
 	}
 }
 
-func (g *Graph) DFS(start int) {
-	visited := make(map[int]bool)
-	g.dfsHelper(start, visited)
-}
-
 func (g *Graph) dfsHelper(node int, visited map[int]bool) {
 	visited[node] = true
 
@@ -71,4 +66,9 @@ func (g *Graph) dfsHelper(node int, visited map[int]bool) {
 			g.dfsHelper(neighbor, visited)
 		}
 	}
+}
+
+func (g *Graph) DFS(start int) {
+	visited := make(map[int]bool)
+	g.dfsHelper(start, visited)
 }
